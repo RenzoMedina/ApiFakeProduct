@@ -1,0 +1,19 @@
+{
+    "name": "aries/api_product",
+    "description": "api project of product",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Renzo Medina",
+            "email": "medinast30@gmail.com"
+        }
+    ],
+    "require": {
+        "flightphp/core": "^3.6"
+    }
+}
