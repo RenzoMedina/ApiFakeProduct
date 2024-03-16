@@ -27,7 +27,7 @@ API_URL = "product"
 La obtención de datos de manera gobal 
 >Request:
 **GET**
->ejemplo:
+ejemplo:
 ``` curl
 http://localhost:8080/api/v1/product
 ```
@@ -63,7 +63,7 @@ respuesta:
 La obtención de datos de manera detalla por el id
 >Request:
 **GET**
->ejemplo:
+ejemplo:
 ``` curl
 http://localhost:8080/api/v1/product/1
 ```
@@ -87,7 +87,7 @@ respuesta:
 El ingreso de datos 
 >Request:
 **POST**
->ejemplo:
+ejemplo:
 ``` curl
 http://localhost:8080/api/v1/product/
 ```
@@ -118,7 +118,7 @@ respuesta:
 Para poder actualizar los datos es ingresar datos y el id dentro de la url
 >Request:
 **PUT**
->ejemplo:
+ejemplo:
 ``` curl
 http://localhost:8080/api/v1/product/1
 ```
@@ -148,7 +148,7 @@ respuesta:
 Para poder algun datos enviamos el nummero de id en la url
 >Request:
 **DELETE**
->ejemplo:
+ejemplo:
 ``` curl
 http://localhost:8080/api/v1/product/1
 ```
