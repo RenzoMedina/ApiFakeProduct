@@ -1,27 +1,40 @@
 <?php
 
 namespace app\controller;
+use app\model\Product;
+use database\FakeProduct;
+use database\Querybuilder;
 use Flight;
-use Faker\Factory;
+
 
 class ProductController{
-    public $faker;
+
+    public $product;
+    protected $db;
     public function __construct(){
-        $this->faker = Factory::create();
+        
+        $this->db = new Querybuilder();
+        $this->product = new Product();
     }
     public function index(){
         
-        Flight::json([
-            "status"=>200,
-            "msg"=>"Hola soy el index",
-            "name"=>$this->faker->name
-        ]);
+        $result = $this->db->getAll();
+        $product = $result;
+        $data = [
+            "message"=>"Datos generales",
+            "data"=> $product,
+            "status"=>200
+        ];
+        Flight::json($data);
     }
+
     public function create(){}
     public function show($id){
+        $product = new FakeProduct();
+    
         Flight::json([
             "status"=>200,
-            "msg"=>"Hola soy el index".$id
+            "msg"=>$product->products()
         ]);
     }
     public function update($id){}
