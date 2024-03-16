@@ -1,13 +1,14 @@
 <?php
 
 namespace database;
-use Faker\Factory;
+use Faker\Factory as Faker;
 use app\model\Product;
 class FakeProduct{
     public $faker;
     public $product;
+    public $list;
     public function __construct(){
-        $this->faker = Factory::create();
+        $this->faker = Faker::create();
         $this->product = new Product();
     }
 

@@ -11,10 +11,12 @@ class ProductController{
 
     public $product;
     protected $db;
+    public $fake;
     public function __construct(){
         
         $this->db = new Querybuilder();
         $this->product = new Product();
+        $this->fake = new FakeProduct();
     }
     public function index(){
         
@@ -30,11 +32,17 @@ class ProductController{
 
     public function create(){
         //esto para poder habilitar para que el usuario lo ingreso manual
-        //$request = Flight::request()->data;
+        $request = Flight::request()->data;
 
-        $requ = new FakeProduct();
-        $this->product = $requ->products();
+        /**
+         * En el caso cargemos datos con fake
+         */
+        //$requ = $this->fake;
+        //$this->product = $requ->products();
+
+
         $json = json_encode($this->product);
+        $json = json_encode($request);
         $this->db->create($json);
         $data = [
             "message"=>"Datos han sido guardados correctamente",
@@ -44,14 +52,39 @@ class ProductController{
         Flight::json($data);
     }
     public function show($id){
-        $fake = new FakeProduct();
-        $this->product = $fake->products();
+        $result= $this->db->getId($id);
+        $product = $result;  
         Flight::json([
-            "status"=>200,
-            "msg"=>$this->product
+            "message"=>"Los datos con id {$id} son:",
+            "data"=>$product,
+            "status"=>202
         ]);
     }
-    public function update($id){}
-    public function delete($id){}
+    public function update($id){
+         //esto para poder habilitar para que el usuario lo ingreso manual
+         $request = Flight::request()->data;
+
+         /**
+         * En el caso cargemos datos con fake
+         */
+        //$requ = $this->fake;
+        //$this->product = $requ->products();
+        
+        $json = json_encode($request);
+        $this->db->update($id,$json);
+        $data = [
+            "message"=>"Datos han sido actualizados correctamente",
+            "data"=> json_decode($json),
+            "status"=>203
+        ];
+        Flight::json($data);
+    }
+    public function destroy($id){
+        $result= $this->db->delete($id);
+        Flight::json([
+            "message"=>"Los datos eliminados son correctamente",
+            "status"=>204
+        ]);
+    }
 
 }
