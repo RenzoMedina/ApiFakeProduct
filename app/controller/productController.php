@@ -28,13 +28,27 @@ class ProductController{
         Flight::json($data);
     }
 
-    public function create(){}
+    public function create(){
+        //esto para poder habilitar para que el usuario lo ingreso manual
+        //$request = Flight::request()->data;
+
+        $requ = new FakeProduct();
+        $this->product = $requ->products();
+        $json = json_encode($this->product);
+        $this->db->create($json);
+        $data = [
+            "message"=>"Datos han sido guardados correctamente",
+            "data"=> json_decode($json),
+            "status"=>201
+        ];
+        Flight::json($data);
+    }
     public function show($id){
-        $product = new FakeProduct();
-    
+        $fake = new FakeProduct();
+        $this->product = $fake->products();
         Flight::json([
             "status"=>200,
-            "msg"=>$product->products()
+            "msg"=>$this->product
         ]);
     }
     public function update($id){}
