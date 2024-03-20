@@ -1,10 +1,13 @@
-
+version: '3'
 services:
-  server:
+  app:
     build:
-      context: .
+      .
     ports:
       - 9000:80
+    volumes:
+      - /var/www/html/vendor
+      - ./app:/var/www/html
 
 
 

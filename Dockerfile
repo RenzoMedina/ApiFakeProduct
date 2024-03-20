@@ -1,24 +1,15 @@
+FROM php:8.1-fpm-alpine
 
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Create a stage for installing app dependencies defined in Composer.
-FROM composer:lts as deps
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-WORKDIR /app
+COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 
+COPY ./composer.* ./
 
-RUN --mount=type=bind,source=composer.json,target=composer.json \
-    --mount=type=bind,source=composer.lock,target=composer.lock \
-    --mount=type=cache,target=/tmp/cache \
-    composer install --no-dev --no-interaction
+RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-interaction
 
+COPY ./app .
 
-FROM php:8.2.12-apache as final
-
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
-
-# Copy the app dependencies from the previous install stage.
-COPY --from=deps app/vendor/ /var/www/html/vendor
-# Copy the app files from the app directory.
-COPY . /var/www/html
-
-USER www-data
+RUN composer dump-autoload --optimize
